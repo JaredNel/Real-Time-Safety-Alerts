@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SafetyAlertsApp.MainPage"
+             Title="About">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25">
+            
+            <Label
+                Text="Real-Time Safety Alerts"
+                Style="{StaticResource Headline}"
+                HorizontalOptions="Center"
+                SemanticProperties.HeadingLevel="Level1" />
+
+            <Frame Padding="20" 
+                   CornerRadius="10"
+                   BackgroundColor="{StaticResource Primary}"
+                   HasShadow="True">
+                <Label
+                    Text="Stay informed about safety events in your area with real-time alerts"
+                    Style="{StaticResource SubHeadline}"
+                    TextColor="White"
+                    HorizontalTextAlignment="Center"
+                    SemanticProperties.HeadingLevel="Level2" />
+            </Frame>
+
+            <Label
+                Text="Features"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level2" />
+
+            <VerticalStackLayout Spacing="15">
+                <Frame Padding="15" CornerRadius="8" HasShadow="True">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label Text="🌍" FontSize="32" VerticalOptions="Center"/>
+                        <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                            <Label Text="Location-Based Alerts" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Get alerts relevant to your current location" 
+                                   FontSize="14"
+                                   TextColor="{StaticResource Gray600}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame Padding="15" CornerRadius="8" HasShadow="True">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label Text="⚡" FontSize="32" VerticalOptions="Center"/>
+                        <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                            <Label Text="Real-Time Updates" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Receive immediate notifications about safety events" 
+                                   FontSize="14"
+                                   TextColor="{StaticResource Gray600}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame Padding="15" CornerRadius="8" HasShadow="True">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label Text="📊" FontSize="32" VerticalOptions="Center"/>
+                        <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                            <Label Text="Severity Levels" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Alerts categorized by severity for quick assessment" 
+                                   FontSize="14"
+                                   TextColor="{StaticResource Gray600}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame Padding="15" CornerRadius="8" HasShadow="True">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label Text="📱" FontSize="32" VerticalOptions="Center"/>
+                        <VerticalStackLayout Spacing="5" VerticalOptions="Center">
+                            <Label Text="Cross-Platform" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Works seamlessly on iOS and Android devices" 
+                                   FontSize="14"
+                                   TextColor="{StaticResource Gray600}"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+
+            <Label
+                Text="Version 1.0"
+                FontSize="14"
+                TextColor="{StaticResource Gray500}"
+                HorizontalOptions="Center"
+                Margin="0,20,0,0"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
