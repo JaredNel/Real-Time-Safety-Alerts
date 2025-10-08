@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:SafetyAlertsApp.ViewModels"
+             xmlns:models="clr-namespace:SafetyAlertsApp.Models"
+             x:Class="SafetyAlertsApp.Views.SafetyAlertsPage"
+             x:DataType="viewmodels:SafetyAlertsViewModel"
+             Title="Safety Alerts">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header with refresh button -->
+        <Frame Grid.Row="0" 
+               BackgroundColor="{StaticResource Primary}"
+               Padding="15"
+               CornerRadius="0">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
+                       Text="Real-Time Safety Alerts"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       VerticalOptions="Center"/>
+                <Button Grid.Column="1"
+                        Text="↻"
+                        FontSize="24"
+                        BackgroundColor="Transparent"
+                        TextColor="White"
+                        Command="{Binding RefreshAlertsCommand}"
+                        WidthRequest="50"
+                        HeightRequest="50"/>
+            </Grid>
+        </Frame>
+
+        <!-- Alerts List -->
+        <RefreshView Grid.Row="1"
+                     IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshAlertsCommand}">
+            <CollectionView ItemsSource="{Binding Alerts}"
+                           SelectionMode="Single"
+                           SelectedItem="{Binding SelectedAlert}"
+                           SelectionChangedCommand="{Binding SelectAlertCommand}"
+                           SelectionChangedCommandParameter="{Binding SelectedAlert}">
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="20" VerticalOptions="Center">
+                        <Label Text="No alerts available"
+                               FontSize="18"
+                               HorizontalOptions="Center"
+                               TextColor="{StaticResource Gray600}"/>
+                        <Label Text="Pull down to refresh"
+                               FontSize="14"
+                               HorizontalOptions="Center"
+                               TextColor="{StaticResource Gray500}"
+                               Margin="0,10,0,0"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SafetyAlert">
+                        <Frame Margin="10,5" 
+                               Padding="15"
+                               CornerRadius="10"
+                               HasShadow="True"
+                               BorderColor="{Binding Severity, Converter={StaticResource SeverityToColorConverter}}">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:SafetyAlertsViewModel}}, Path=SelectAlertCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+                            
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto" 
+                                  ColumnDefinitions="*,Auto">
+                                <!-- Title and Severity Badge -->
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Title}"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Gray900}"/>
+                                
+                                <Frame Grid.Row="0" Grid.Column="1"
+                                       Padding="8,4"
+                                       CornerRadius="5"
+                                       HasShadow="False"
+                                       BackgroundColor="{Binding Severity, Converter={StaticResource SeverityToColorConverter}}"
+                                       VerticalOptions="Start">
+                                    <Label Text="{Binding Severity}"
+                                           TextColor="White"
+                                           FontSize="12"
+                                           FontAttributes="Bold"/>
+                                </Frame>
+
+                                <!-- Description -->
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding Description}"
+                                       FontSize="14"
+                                       TextColor="{StaticResource Gray600}"
+                                       MaxLines="2"
+                                       LineBreakMode="TailTruncation"
+                                       Margin="0,5,0,0"/>
+
+                                <!-- Location -->
+                                <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                                      Margin="0,8,0,0">
+                                    <Label Text="📍"
+                                           FontSize="14"/>
+                                    <Label Text="{Binding Location.City}"
+                                           FontSize="14"
+                                           TextColor="{StaticResource Gray700}"
+                                           Margin="5,0,0,0"/>
+                                    <Label Text=" • "
+                                           FontSize="14"
+                                           TextColor="{StaticResource Gray500}"/>
+                                    <Label FontSize="14"
+                                           TextColor="{StaticResource Gray700}">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding DistanceFromUser, StringFormat='{0:F1} km away'}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </HorizontalStackLayout>
+
+                                <!-- Time -->
+                                <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding Timestamp, StringFormat='{0:g}'}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource Gray500}"
+                                       Margin="0,5,0,0"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Status Bar -->
+        <Frame Grid.Row="2"
+               BackgroundColor="{StaticResource Gray100}"
+               Padding="10"
+               CornerRadius="0"
+               HasShadow="False">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                 IsVisible="{Binding IsLoading}"
+                                 Color="{StaticResource Primary}"/>
+                <Label Text="{Binding StatusMessage}"
+                       FontSize="14"
+                       TextColor="{StaticResource Gray700}"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

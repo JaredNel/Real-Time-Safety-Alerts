@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SafetyAlertsApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SafetyAlertsApp"
+    xmlns:views="clr-namespace:SafetyAlertsApp.Views"
+    Shell.FlyoutBehavior="Flyout"
+    Title="Real-Time Safety Alerts">
+
+    <ShellContent
+        Title="Safety Alerts"
+        ContentTemplate="{DataTemplate views:SafetyAlertsPage}"
+        Route="SafetyAlertsPage"
+        Icon="{FontImageSource Glyph='⚠️', Color={StaticResource Primary}, Size=24}" />
+
+    <ShellContent
+        Title="About"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage"
+        Icon="{FontImageSource Glyph='ℹ️', Color={StaticResource Primary}, Size=24}" />
+
+</Shell>
